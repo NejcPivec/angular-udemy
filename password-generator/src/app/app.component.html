@@ -1,0 +1,45 @@
+<h1 class="title is-1">{{ title }}</h1>
+
+<form (ngSubmit)="onButtonClick()">
+  <div>
+    <label for="length">Enter length</label>
+    <input [(ngModel)]="length" type="number" name="length" id="length" />
+  </div>
+
+  <div>
+    <label for="letters">Use letters</label>
+    <input
+      (change)="onChangeUseLetters()"
+      type="checkbox"
+      name="letters"
+      id="letters"
+    />
+  </div>
+  <div>
+    <label for="numbers">Use numbers</label>
+    <input
+      (change)="onChangeUseNumbers()"
+      type="checkbox"
+      name="numbers"
+      id="numbers"
+    />
+  </div>
+  <div>
+    <label for="symbols">Use symbols</label>
+    <input
+      (change)="onChangeUseSymbols()"
+      type="checkbox"
+      name="symbols"
+      id="symbols"
+    />
+  </div>
+
+  <div>
+    <button class="button is-primary" [disabled]="!length">Generate</button>
+  </div>
+
+  <div class="box" *ngIf="password">
+    <label for="password">Your password</label>
+    <input type="text" name="password" id="password" [value]="password" />
+  </div>
+</form>
