@@ -6,6 +6,10 @@ export class MatchPassword implements Validator {
   validate(formGroup: AbstractControl) {
     const { password, passwordConfirmation } = formGroup.value;
 
+    if (password.length >= 8 && passwordConfirmation.length >= 8) {
+      console.log('Lengt is valid');
+    }
+
     if (password === passwordConfirmation) {
       return null;
     } else {
