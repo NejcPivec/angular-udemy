@@ -9,6 +9,8 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./signin.component.css'],
 })
 export class SigninComponent implements OnInit {
+  loading: boolean = false;
+
   authForm = new FormGroup({
     username: new FormControl('', [
       Validators.required,
@@ -25,19 +27,28 @@ export class SigninComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('OnInit', this.loading);
+  }
 
   onSubmit() {
     if (this.authForm.invalid) {
       return;
     }
 
+    this.loading = true;
+    console.log('Set loading', this.loading);
+
     this.authService.signIn(this.authForm.value).subscribe({
       next: () => {
+        this.loading = false;
+        console.log('Next loading', this.loading);
         // Manual navigation
         this.router.navigateByUrl('/inbox');
       },
       error: ({ error }) => {
+        this.loading = false;
+        console.log('Error loading', this.loading);
         if (error.username || error.password) {
           this.authForm.setErrors({ credentials: true });
         }

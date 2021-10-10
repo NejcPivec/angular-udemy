@@ -11,6 +11,8 @@ import { UniqueUsername } from '../validators/unique-username';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
+  loading: boolean = false;
+
   authForm = new FormGroup(
     {
       username: new FormControl(
@@ -44,7 +46,9 @@ export class SignupComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.loading);
+  }
 
   onSubmit() {
     if (this.authForm.invalid) {
@@ -52,15 +56,25 @@ export class SignupComponent implements OnInit {
     }
 
     this.authService.signUp(this.authForm.value).subscribe({
-      // Success
+      // Pending
       next: (response) => {
+        this.loading = true;
+        console.log('Next loading', this.loading);
+
         this.router.navigateByUrl('/inbox');
       },
       // Error
       error: (error) => {
+        this.loading = false;
+        console.log('Error loading', this.loading);
         if (!error.status) {
           this.authForm.setErrors({ noConnection: true });
         }
+      },
+      // Success
+      complete: () => {
+        this.loading = false;
+        console.log('Complete loading', this.loading);
       },
     });
   }

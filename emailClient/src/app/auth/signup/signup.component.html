@@ -1,4 +1,6 @@
 <h3>Create an account</h3>
+<p *ngIf="loading">LOADING....</p>
+
 <form (ngSubmit)="onSubmit()" [formGroup]="authForm" class="ui form">
   <app-input
     inputType="text"
@@ -15,7 +17,6 @@
     label="Password Confirmation"
     [control]="authForm.get('passwordConfirmation')"
   ></app-input>
-
   <div
     class="ui red basic label"
     *ngIf="
