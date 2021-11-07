@@ -1,0 +1,41 @@
+<div class="container">
+  <h2>Angular forms errors</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit()">
+    <div class="mb-2">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" formControlName="email" />
+        <span
+          class="text-danger"
+          *ngIf="
+            (loginFormControl.email.touched || submitted) &&
+            loginFormControl.email.errors?.required
+          "
+        >
+          Email is required
+        </span>
+        <span
+          class="text-danger"
+          *ngIf="
+            loginFormControl.email.touched &&
+            loginFormControl.email.errors?.email
+          "
+        >
+          Enter a valid email address
+        </span>
+      </div>
+      Email error: {{ loginForm.get("email")?.errors | json }}
+    </div>
+    <!-- <div class="mb-2">
+      <label for="password" class="form-label">Password: </label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        class="form-control"
+      />
+      Password error: {{ loginForm.get("password")?.errors | json }}
+    </div> -->
+    <button type="submit">Submit</button>
+  </form>
+</div>
